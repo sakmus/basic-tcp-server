@@ -8,3 +8,13 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
+
+#ifndef HEADERS_H
+#define HEADERS_H
+
+typedef struct {
+    int client_fd;
+    struct sockaddr_in client_addr;
+} client_info_t;
+
+#endif
