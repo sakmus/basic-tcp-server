@@ -1,6 +1,12 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+// Functions for server setup
+int parse_port(int argc, char *argv[]);
+int create_socket();
+int configure_and_bind_socket(int sock_fd, int port);
+int start_listening(int sock_fd);
+int initialise_server(int port);
 
 // Functions to handle client thread
 void* handle_client(void* arg);
