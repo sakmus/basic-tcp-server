@@ -1,24 +1,5 @@
-// #include <stdio.h>
-// #include <errno.h>
-// #include <string.h>
-// #include <sys/socket.h>
-// #include <arpa/inet.h>
-// #include <unistd.h>
-// #include <stdlib.h>
-// #include <pthread.h>
-// #include <unistd.h>
-
 #include "../include/headers.h"
 #include "../include/functions.h"
-
-
-// void reciever(int client_fd);
-// int sender(int client_fd, const char *message);
-
-typedef struct {
-    int client_fd;
-    struct sockaddr_in client_addr;
-} client_info_t;
 
 void* handle_client(void* arg) {
     // Extract client information
@@ -47,8 +28,6 @@ void* handle_client(void* arg) {
     free(client_info);
     return NULL;
 }
-
-
 
 void reciever(int client_fd) {
     char buffer[4096] = {0};
