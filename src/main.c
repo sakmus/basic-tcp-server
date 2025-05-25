@@ -1,7 +1,5 @@
 #include "../include/headers.h"
 #include "../include/functions.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 #define DEFAULT_PORT 4545
 
@@ -12,11 +10,6 @@ void handle_signal(int arg) {
     exit(0);
 }
 
-// Structure to pass client information
-typedef struct {
-    int client_fd;
-    struct sockaddr_in client_addr;
-} client_info_t;
 
 int main(int argc, char *argv[]) {
     // Handle signal
