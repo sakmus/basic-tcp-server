@@ -1,3 +1,6 @@
+#ifndef HEADERS_H
+#define HEADERS_H
+
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
@@ -9,12 +12,16 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#ifndef HEADERS_H
-#define HEADERS_H
+#define DEFAULT_PORT 4545
+#define BACKLOG 10
+
+extern int server_fd;
 
 typedef struct {
     int client_fd;
     struct sockaddr_in client_addr;
 } client_info_t;
+
+
 
 #endif
