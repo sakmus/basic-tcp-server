@@ -1,37 +1,36 @@
 #include "../include/headers.h"
 #include "../include/functions.h"
 
-void* handle_client(void* arg) {
-    // Extract client information
-    client_info_t* client_info = (client_info_t*)arg;
-    int client_fd = client_info->client_fd;
-    struct sockaddr_in client_addr = client_info->client_addr;
-
-    // Display client basic information
-    char client_ip[INET_ADDRSTRLEN];
-    inet_ntop(AF_INET, &(client_addr.sin_addr), client_ip, INET_ADDRSTRLEN);
-    printf("Client connected from %s:%d\n", client_ip, ntohs(client_addr.sin_port));
-
-    // Recieve data from client
-    reciever(client_fd);
-
-    // Send HTTP/1.1 200 OK response
-    const char* http_response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nConnection: close\r\n\r\n<html><body><h1>HTTP 200 OK</h1><p>Your request was successfully recieved! The connection would be closed after this message.</p></body></html>";
-
-    int status = sender(client_fd, http_response);
-    if (status != 0) {
-	printf("Couldn't send the message... %s\n", strerror(status));
+// Parse and validate port number from command line arguments
+int parse_port(int argc, char *argv[]) {
+    int port;
+    if (argc == 2) {
+        port = atoi(argv[1]);
+        if (port <= 0 || port > 65535) {
+            printf("Invalid port number provided. Using default.\n");
+            port = DEFAULT_PORT;
+        }
+    } else {
+        port = DEFAULT_PORT;
+        printf("No port provided. Using the default port %d\n", port);
     }
-
-    // Gracefully close the connection and free up the memory
-    close(client_fd);
-    free(client_info);
-    return NULL;
+    return port;
 }
 
-void reciever(int client_fd) {
+// Create the socket and return file descriptor
+int create_socket(void) {
+    int sock_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock_fd < 0) {
+        printf("Couldn't create the socket... %s\n", strerror(errno));
+        return -1;
+    }
+    return sock_fd;
+}
+
+// Recieve data from the other side
+void reciever(int sock_fd) {
     char buffer[4096] = {0};
-    ssize_t bytes_size = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
+    ssize_t bytes_size = recv(sock_fd, buffer, sizeof(buffer) - 1, 0);
     if (bytes_size > 0) {
 	buffer[bytes_size] = '\0';
 	printf("Recieved data:\n%s\n", buffer);
@@ -39,8 +38,9 @@ void reciever(int client_fd) {
     return;
 }
 
-int sender(int client_fd, const char *message) {
-    int status = send(client_fd, message, strlen(message), 0);
+// Send data to the other side
+int sender(int sock_fd, const char *message) {
+    int status = send(sock_fd, message, strlen(message), 0);
     if (status == -1) {
 	return errno;
     }
