@@ -4,8 +4,8 @@
 // Parse and validate port number from command line arguments
 int parse_port(int argc, char *argv[]) {
     int port;
-    if (argc == 2) {
-        port = atoi(argv[1]);
+    if (argc == 2 || argc == 3) {
+        port = atoi(argv[argc - 1]);
         if (port <= 0 || port > 65535) {
             printf("Invalid port number provided. Using default.\n");
             port = DEFAULT_PORT;
