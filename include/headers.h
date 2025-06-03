@@ -12,6 +12,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
+#define DEFAULT_HOST "127.0.0.1"
 #define DEFAULT_PORT 4545
 #define BACKLOG 10
 
