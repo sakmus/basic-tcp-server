@@ -6,7 +6,7 @@ This is a basic TCP server-client model built with plain C with socket programmi
 
 ## Prerequisites
 
-- GCC — C compiler for compiling the program from source
+- Clang — C compiler for compiling the program from source
 - make — A build automation tool to make our lives easier
 
 ## Building
