@@ -2,22 +2,24 @@
 
 ## Description
 
-This is a basic TCP server built with plain C with socket programming. This program also offers concurrency by handling multiple clients at the same time with the thread-per-client model. This is a very simple, easy and lightweight server.
+This is a basic TCP server-client model built with plain C with socket programming. This program also offers concurrency by handling multiple clients at the same time with the thread-per-client model. This is very simple, easy and lightweight.
 
 ## Prerequisites
 
 - GCC — C compiler for compiling the program from source
-- make — A build automation tool to make our life easier
+- make — A build automation tool to make our lives easier
 
 ## Building
 
 Building the project is pretty easy to do, thanks to the Makefile. To build the program, run the command from your terminal:
 
 ```bash
-$ make
+$ make server # For building only the server binary
+$ make client # For building only the client binary
+$ make all    # For building both the server and client binaries
 ```
 
-And let it automatically compile the program.
+And let it automatically compile the program(s).
 
 ## Usage
 
@@ -25,6 +27,14 @@ The compiled binary would be available in `bin/` directory. Simply execute the b
 
 ```bash
 $ ./bin/server <port>
+```
+
+For using the client binary, it is pretty straight like using the server binary. You have to execute the binary with optional arguments of the host IPv4 address and port. Here are the allowed usecases,
+
+```bash
+$ ./bin/client <host> <port>
+$ ./bin/client <port>
+$ ./bin/client
 ```
 
 ## Cleanup
